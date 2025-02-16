@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects & Works</title>
+  <style>
+    /* --- General Styles --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* --- Projects Grid --- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    
+    /* --- Project Card Styles --- */
+    .project-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .project-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .project-image-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+    .project-image {
+      width: 100%;
+      display: block;
+      transition: transform 0.3s, filter 0.3s;
+    }
+    .project-card:hover .project-image {
+      transform: scale(1.1);
+      filter: brightness(0.8);
+    }
+    .project-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+    .expand-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+    .project-details {
+      padding: 15px;
+      text-align: center;
+    }
+    .project-category {
+      font-size: 0.9rem;
+      color: gray;
+    }
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    .project-description {
+      font-size: 0.95rem;
+      margin: 8px 0;
+    }
+    .github-btn {
+      display: inline-flex;
+      align-items: center;
+      background: black;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      transition: transform 0.2s;
+    }
+    .github-btn:hover {
+      transform: scale(1.05);
+    }
+    .github-btn img {
+      width: 18px;
+      margin-right: 5px;
+    }
+    .project-tags {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .project-tag {
+      background: rgba(0,0,0,0.1);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin: 3px;
+    }
+    
+    /* --- Modal Styles --- */
+    .project-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: white;
+      width: 800px;
+      max-width: 90%;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .project-modal.active {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .modal-header {
+      text-align: center;
+    }
+    .modal-header img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .modal-title {
+      font-size: 1.8rem;
+      margin: 15px 0;
+    }
+    .modal-body {
+      margin-top: 10px;
+    }
+    .modal-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .modal-tag {
+      background: #007BFF;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .modal-description {
+      font-size: 1rem;
+    }
+    .modal-skills {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .close-modal {
+      background: red;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Projects & Works</h2>
+  
+  <div class="projects-grid">
+    <div class="project-card" onclick="openModal('project1')">
+      <img src="project1.jpg" class="project-image">
+      <div class="project-details">
+        <div class="project-title">AI Chatbot</div>
+        <div class="project-description">NLP-powered chatbot with intent detection and response generation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Project Modals -->
+<div id="project1" class="project-modal">
+  <div class="modal-header">
+    <img src="project1.jpg">
+    <h2 class="modal-title">AI Chatbot</h2>
+  </div>
+  <div class="modal-body">
+    <div class="modal-tags">
+      <span class="modal-tag">AI</span>
+      <span class="modal-tag">NLP</span>
+    </div>
+    <p class="modal-description">A chatbot utilizing RASA for conversational AI.</p>
+    <div class="modal-skills">Skills: Python, RASA, NLP</div>
+    <a href="https://github.com" class="github-btn">View on GitHub</a>
+    <button class="close-modal" onclick="closeModal('project1')">Close</button>
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+</script>
+
+</body>
+</html>

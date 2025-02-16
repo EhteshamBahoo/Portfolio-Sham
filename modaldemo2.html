@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects & Works</title>
+  <style>
+    /* --- General Styles --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; color: #333; line-height: 1.6; padding: 20px; }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
+    h2 { text-align: center; font-size: 2.5rem; margin-bottom: 1rem; }
+
+    /* --- Project Grid --- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* --- Project Cards --- */
+    .project-card {
+      background: white; 
+      border-radius: 10px; 
+      overflow: hidden; 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s; 
+      cursor: pointer; 
+      position: relative;
+    }
+    .project-card:hover { 
+      transform: scale(1.03); 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+    }
+    .project-image { 
+      width: 100%; 
+      display: block; 
+      transition: transform 0.3s, filter 0.3s; 
+    }
+    .project-card:hover .project-image { 
+      transform: scale(1.1); 
+      filter: brightness(0.8); 
+    }
+    .project-details { padding: 15px; text-align: center; }
+    .project-title { font-size: 1.2rem; font-weight: bold; margin: 8px 0; }
+    .project-category { font-size: 0.9rem; color: gray; }
+    .project-description { font-size: 0.95rem; margin: 8px 0; }
+    .github-btn {
+      display: inline-flex; 
+      align-items: center; 
+      background: black; 
+      color: white;
+      padding: 6px 12px; 
+      border-radius: 4px; 
+      text-decoration: none; 
+      font-size: 0.9rem;
+      transition: transform 0.2s;
+    }
+    .github-btn:hover { transform: scale(1.05); }
+    .github-btn img { width: 18px; margin-right: 5px; }
+    .project-tags { 
+      margin-top: 10px; 
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+    }
+    .project-tag { 
+      background: rgba(0,0,0,0.1); 
+      padding: 4px 8px; 
+      border-radius: 4px; 
+      font-size: 0.75rem; 
+      margin: 3px; 
+    }
+
+    /* --- Modal Styles --- */
+    /* Overlay covers the entire viewport and centers its content */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw; /* full viewport width */
+      height: 100vh; /* full viewport height */
+      background: rgba(0,0,0,0.7);
+      display: none; /* will be changed to flex when active */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    /* The modal content container */
+    .modal-content {
+      background: white; 
+      width: 800px; 
+      max-width: 90%; 
+      padding: 30px; 
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3); 
+      text-align: center; 
+      position: relative;
+    }
+    .close-btn { 
+      position: absolute; 
+      top: 15px; 
+      right: 20px; 
+      font-size: 2rem; 
+      color: #333; 
+      cursor: pointer; 
+    }
+    .modal-header img { 
+      width: 100%; 
+      height: 300px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+    }
+    .modal-header h1 { 
+      font-size: 2.5rem; 
+      margin-top: 15px; 
+      color: #333; 
+      text-align: left; 
+    }
+    .modal-tags, .modal-skillset { 
+      margin-top: 15px; 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 8px; 
+    }
+    .modal-description { 
+      margin: 20px 0; 
+      font-size: 1.1rem; 
+      color: #555; 
+    }
+    .modal-description li {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    .btn-modal {
+      display: inline-flex; 
+      align-items: center; 
+      background: black; 
+      color: white;
+      padding: 8px 16px; 
+      border-radius: 5px; 
+      text-decoration: none; 
+      font-size: 1rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn-modal:hover { 
+      background: #333; 
+      transform: scale(1.05); 
+    }
+
+    /* --- New Modal Enhancements (Animations) --- */
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes modalFadeOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.8); }
+    }
+    .modal-overlay.active {
+      display: flex;
+      animation: modalFadeIn 0.4s ease forwards;
+    }
+    .modal-overlay.closing {
+      animation: modalFadeOut 0.4s ease forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <section id="projects" class="works-section">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+
+        <!-- Project Card 1 -->
+        <article class="project-card" onclick="openModal('modal-project1')">
+          <img src="img/works/project1.jpg" alt="Project 1" class="project-image">
+          <div class="project-details">
+            <p class="project-category">AI & Data Science</p>
+            <h3 class="project-title">FIFA World Cup Predictor</h3>
+            <p class="project-description">A predictive model for 2026 FIFA World Cup fixtures.</p>
+            <a href="#" class="github-btn"><img src="img/icons/github.svg" alt="GitHub"> GitHub</a>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">#MachineLearning</span>
+            <span class="project-tag">#Python</span>
+          </div>
+        </article>
+
+        <!-- Project Card 2 -->
+        <article class="project-card" onclick="openModal('modal-project2')">
+          <img src="img/works/project2.jpg" alt="Project 2" class="project-image">
+          <div class="project-details">
+            <p class="project-category">Web Development</p>
+            <h3 class="project-title">Laundry Service Calculator</h3>
+            <p class="project-description">A responsive laundry calculator for Odoo integration.</p>
+            <a href="#" class="github-btn"><img src="img/icons/github.svg" alt="GitHub"> GitHub</a>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">#JavaScript</span>
+            <span class="project-tag">#Odoo</span>
+          </div>
+        </article>
+
+        <!-- Project Card 3 -->
+        <article class="project-card" onclick="openModal('modal-project3')">
+          <img src="img/works/project3.jpg" alt="Project 3" class="project-image">
+          <div class="project-details">
+            <p class="project-category">Cybersecurity</p>
+            <h3 class="project-title">Intrusion Detection System</h3>
+            <p class="project-description">AI-powered security monitoring for networks.</p>
+            <a href="#" class="github-btn"><img src="img/icons/github.svg" alt="GitHub"> GitHub</a>
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">#Cybersecurity</span>
+            <span class="project-tag">#DeepLearning</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  
+  <!-- Modal for Project 1 -->
+  <div id="modal-project1" class="modal-overlay" onclick="closeModal('modal-project1')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('modal-project1')">&times;</span>
+      <!-- Modal Banner -->
+      <div class="modal-header">
+        <img src="img/works/project1.jpg" alt="Project 1 Banner">
+      </div>
+      <h1>FIFA World Cup Predictor</h1>
+      <!-- Modal Tags -->
+      <div class="modal-tags">
+        <span class="project-tag">#MachineLearning</span>
+        <span class="project-tag">#Python</span>
+      </div>
+      <!-- Modal Description in bullet points -->
+      <ul class="modal-description">
+        <li>A predictive model for forecasting the 2026 FIFA World Cup fixtures using machine learning.</li>
+      </ul>
+      <a href="#" class="github-btn"><img src="img/icons/github.svg" alt="GitHub"> GitHub</a>
+    </div>
+  </div>
+
+  <!-- Modal for Project 2 -->
+  <div id="modal-project2" class="modal-overlay" onclick="closeModal('modal-project2')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('modal-project2')">&times;</span>
+      <!-- Modal Banner -->
+      <div class="modal-header">
+        <img src="img/works/project2.jpg" alt="Project 2 Banner">
+      </div>
+      <h1>Laundry Service Calculator</h1>
+      <!-- Modal Tags -->
+      <div class="modal-tags">
+        <span class="project-tag">#JavaScript</span>
+        <span class="project-tag">#Odoo</span>
+      </div>
+      <!-- Modal Description in bullet points -->
+      <ul class="modal-description">
+        <li>A responsive laundry calculator for Odoo integration.</li>
+      </ul>
+      <a href="#" class="github-btn"><img src="img/icons/github.svg" alt="GitHub"> GitHub</a>
+    </div>
+  </div>
+
+  <!-- Modal for Project 3 -->
+  <div id="modal-project3" class="modal-overlay" onclick="closeModal('modal-project3')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('modal-project3')">&times;</span>
+      <!-- Modal Banner -->
+      <div class="modal-header">
+        <img src="img/works/project3.jpg" alt="Project 3 Banner">
+      </div>
+      <h1>Intrusion Detection System</h1>
+      <!-- Modal Tags -->
+      <div class="modal-tags">
+        <span class="project-tag">#Cybersecurity</span>
+        <span class="project-tag">#DeepLearning</span>
+      </div>
+      <!-- Modal Description in bullet points -->
+      <ul class="modal-description">
+        <li>AI-powered security monitoring for networks.</li>
+      </ul>
+      <a href="#" class="github-btn"><img src="img/icons/github.svg" alt="GitHub"> GitHub</a>
+    </div>
+  </div>
+
+  <!-- New Script for Modal Animation and Enhanced Functionality -->
+  <script>
+    // Use only one set of modal functions to avoid duplicates.
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      modal.style.display = 'flex';
+      // Force reflow to restart animation if needed
+      void modal.offsetWidth;
+      modal.classList.add('active');
+      modal.classList.remove('closing');
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.add('closing');
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('closing');
+      }, 400);
+    }
+  </script>
+
+</body>
+</html>
