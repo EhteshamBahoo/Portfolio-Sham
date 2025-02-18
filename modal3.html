@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects Showcase with Detailed Modal</title>
+  <style>
+    /* ============================================
+       Projects Section Reset & Basic Styles
+       (Scoped only to the .projects section)
+    ============================================ */
+    .projects, .projects * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    .projects {
+      font-family: Arial, sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+      line-height: 1.5;
+    }
+    .projects .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* ============================================
+       Projects Section
+    ============================================ */
+    .projects {
+      padding: 7rem 0;
+      text-align: center;
+    }
+    .projects-title {
+      margin-bottom: 2rem;
+    }
+    .projects-title .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .projects-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      justify-items: center;
+    }
+
+    /* ============================================
+       Project Card
+    ============================================ */
+    .project-box {
+      background-color: #1a1a1a;
+      border: 2px solid #333;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 510px;
+    }
+    .project-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.7);
+    }
+    .project-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+    .project-box:hover .project-img {
+      transform: scale(1.05);
+    }
+    .project-details-box {
+      background-color: #111;
+      padding: 20px;
+      border-top: 1px solid #333;
+      text-align: left;
+    }
+    .project-tagline {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .project-name {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .project-description {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.3;
+      max-height: 2.6em; /* roughly 2 lines */
+      overflow: hidden;
+    }
+    .project-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      border: 1px solid transparent;
+    }
+    .project-btn .btn-icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .github-btn {
+      background: #24292e;
+      color: #fff;
+    }
+    .github-btn:hover {
+      background: #3a3f47;
+      transform: scale(1.05);
+    }
+    .learn-more-btn {
+      background: #e63946;
+      color: #fff;
+    }
+    .learn-more-btn:hover {
+      background: #d62828;
+      transform: scale(1.05);
+    }
+
+    /* ============================================
+       Responsive Adjustments for Projects Section
+    ============================================ */
+    @media (max-width: 600px) {
+      .projects {
+        padding: 4rem 0;
+      }
+      .projects-title .title {
+        font-size: 2rem;
+      }
+      .project-details-box {
+        padding: 15px;
+      }
+      .project-name {
+        font-size: 1.3rem;
+      }
+      .project-description {
+        font-size: 0.8rem;
+      }
+      .project-btn {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* ============================================
+       Modal Styles (Global, not scoped to .projects)
+       (The modal styles remain global)
+    ============================================ */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 90%;
+      max-width: 800px;
+      height: 80vh; /* Fixed overall modal height */
+      position: relative;
+      animation: modalIn 0.5s ease-out;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes modalIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #e63946;
+      color: #fff;
+      border: none;
+      font-size: 1.5rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .modal-banner {
+      width: 100%;
+      overflow: hidden;
+    }
+    .modal-banner img {
+      width: 100%;
+      display: block;
+      /* Banner image now retains its natural size */
+    }
+    .modal-body {
+      padding: 20px;
+      color: #fff;
+      font-size: 1.1rem;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .modal-body h2 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    .modal-hashtags {
+      margin-bottom: 10px;
+    }
+    .modal-hashtags .hashtag {
+      display: inline-block;
+      background: #333;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 5px;
+      margin-right: 5px;
+      font-size: 0.9rem;
+    }
+    .modal-description {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .modal-additional-info {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-style: italic;
+      color: #ccc;
+    }
+    .modal-overview {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .modal-detail {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .modal-buttons {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Projects Section -->
+  <section id="projects" class="projects">
+    <div class="container">
+      <div class="projects-title">
+        <h2 class="title">Art</h2>
+      </div>
+      <div class="projects-row">
+        <!-- Card 1: Finance Dashboard -->
+        <div class="project-box" data-project="Finance Dashboard" data-desc="A sleek interface designed for dynamic data insights, offering real-time analytics and visualization." data-detail="This project analyzes football player statistics for the 2024-2025 season, visualizes top performers, and simulates matches between national teams based on player performance metrics. The analysis and simulations are carried out through three Jupyter Notebooks: Player-Stats.ipynb, National-Team-Stats.ipynb, and National-Team-Match-Simulation.ipynb. Detailed analysis, custom visualizations, and interactive dashboards bring the data to life." data-github="https://github.com/" data-banner="img/works/project2.jpg" data-tags="#AI #DataScience #Analytics">
+          <a href="#!" class="project-link">
+            <img class="project-img" src="img/works/project2.jpg" alt="Finance Dashboard">
+          </a>
+          <div class="project-details-box">
+            <div class="project-tagline">AI &amp; Data Science</div>
+            <div class="project-name">Finance Dashboard</div>
+            <div class="project-description">
+              A sleek interface designed for dynamic data insights.
+            </div>
+            <div class="project-buttons">
+              <a href="https://github.com/" class="project-btn github-btn" target="_blank">
+                <img src="img/icons/github.svg" alt="GitHub" class="btn-icon"> GitHub
+              </a>
+              <a href="#!" class="project-btn learn-more-btn">
+                <img src="img/icons/info.svg" alt="Learn More" class="btn-icon"> Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2: Product Design -->
+        <div class="project-box" data-project="Product Design" data-desc="Innovative design concepts that bring ideas to life." data-detail="This project showcases innovative design concepts with a focus on user experience and aesthetics. It covers everything from wireframing and prototyping to high-fidelity designs and interactive animations. Detailed case studies and design iterations are included to provide insight into the creative process." data-github="https://github.com/" data-banner="img/works/project1.jpg" data-tags="#UI #UX #Design">
+          <a href="#!" class="project-link">
+            <img class="project-img" src="img/works/project1.jpg" alt="Product Design">
+          </a>
+          <div class="project-details-box">
+            <div class="project-tagline">UI &amp; UX</div>
+            <div class="project-name">Product Design</div>
+            <div class="project-description">
+              Creative and user-centered design for modern products.
+            </div>
+            <div class="project-buttons">
+              <a href="https://github.com/" class="project-btn github-btn" target="_blank">
+                <img src="img/icons/github.svg" alt="GitHub" class="btn-icon"> GitHub
+              </a>
+              <a href="#!" class="project-btn learn-more-btn">
+                <img src="img/icons/info.svg" alt="Learn More" class="btn-icon"> Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3: Landing Page -->
+        <div class="project-box" data-project="Landing Page" data-desc="Responsive landing pages that drive conversions." data-detail="This landing page project is designed to capture leads and engage visitors. It employs modern design trends, responsive layouts, and dynamic elements to create an engaging experience. Detailed A/B testing, conversion optimization techniques, and performance analytics are part of the project documentation." data-github="https://github.com/" data-banner="img/works/project4.jpg" data-tags="#Web #Design #LandingPage">
+          <a href="#!" class="project-link">
+            <img class="project-img" src="img/works/project4.jpg" alt="Landing Page">
+          </a>
+          <div class="project-details-box">
+            <div class="project-tagline">Web Development</div>
+            <div class="project-name">Landing Page</div>
+            <div class="project-description">
+              Clean, modern landing pages optimized for engagement.
+            </div>
+            <div class="project-buttons">
+              <a href="https://github.com/" class="project-btn github-btn" target="_blank">
+                <img src="img/icons/github.svg" alt="GitHub" class="btn-icon"> GitHub
+              </a>
+              <a href="#!" class="project-btn learn-more-btn">
+                <img src="img/icons/info.svg" alt="Learn More" class="btn-icon"> Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4: Portfolio -->
+        <div class="project-box" data-project="Portfolio" data-desc="A professional portfolio to showcase your work." data-detail="This portfolio project is a comprehensive showcase of professional work. It includes case studies, project breakdowns, and interactive elements that highlight skills and achievements. The design is modern, minimalistic, and optimized for performance on all devices." data-github="https://github.com/" data-banner="img/works/project3.jpg" data-tags="#WebDev #Portfolio">
+          <a href="#!" class="project-link">
+            <img class="project-img" src="img/works/project3.jpg" alt="Portfolio">
+          </a>
+          <div class="project-details-box">
+            <div class="project-tagline">Web Development</div>
+            <div class="project-name">Portfolio</div>
+            <div class="project-description">
+              A modern portfolio design that highlights your creativity.
+            </div>
+            <div class="project-buttons">
+              <a href="https://github.com/" class="project-btn github-btn" target="_blank">
+                <img src="img/icons/github.svg" alt="GitHub" class="btn-icon"> GitHub
+              </a>
+              <a href="#!" class="project-btn learn-more-btn">
+                <img src="img/icons/info.svg" alt="Learn More" class="btn-icon"> Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 5: Cosmic Sea -->
+        <div class="project-box" data-project="Cosmic Sea" data-desc="A visually stunning experience blending design and technology." data-detail="Cosmic Sea is an immersive project that combines creative visuals with interactive technology. The project documentation includes detailed design decisions, coding challenges, and performance optimizations. It serves as a testament to the blend of art and technology in modern web design." data-github="https://github.com/" data-banner="img/works/project2.jpg" data-tags="#UI #UX #Interactive">
+          <a href="#!" class="project-link">
+            <img class="project-img" src="img/works/project2.jpg" alt="Cosmic Sea">
+          </a>
+          <div class="project-details-box">
+            <div class="project-tagline">UI &amp; UX</div>
+            <div class="project-name">Cosmic Sea</div>
+            <div class="project-description">
+              A visually stunning experience blending design and technology.
+            </div>
+            <div class="project-buttons">
+              <a href="https://github.com/" class="project-btn github-btn" target="_blank">
+                <img src="img/icons/github.svg" alt="GitHub" class="btn-icon"> GitHub
+              </a>
+              <a href="#!" class="project-btn learn-more-btn">
+                <img src="img/icons/info.svg" alt="Learn More" class="btn-icon"> Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 6: eCommerce -->
+        <div class="project-box" data-project="eCommerce" data-desc="An engaging online shopping experience built for conversion." data-detail="The eCommerce project encompasses a full-fledged online store design with seamless navigation, user-friendly interfaces, and secure payment integrations. Detailed documentation covers front-end and back-end development, performance tuning, and user experience enhancements." data-github="https://github.com/" data-banner="img/works/project1.jpg" data-tags="#WebDev #eCommerce">
+          <a href="#!" class="project-link">
+            <img class="project-img" src="img/works/project1.jpg" alt="eCommerce">
+          </a>
+          <div class="project-details-box">
+            <div class="project-tagline">Web Development</div>
+            <div class="project-name">eCommerce</div>
+            <div class="project-description">
+              An engaging online shopping experience built for conversion.
+            </div>
+            <div class="project-buttons">
+              <a href="https://github.com/" class="project-btn github-btn" target="_blank">
+                <img src="img/icons/github.svg" alt="GitHub" class="btn-icon"> GitHub
+              </a>
+              <a href="#!" class="project-btn learn-more-btn">
+                <img src="img/icons/info.svg" alt="Learn More" class="btn-icon"> Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       Modal Structure
+       (Modal styles remain global)
+  ============================================ -->
+  <div class="modal" id="projectModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <!-- Banner Image as Modal Header -->
+      <div class="modal-banner">
+        <img src="" alt="Project Banner" id="modalBanner">
+      </div>
+      <div class="modal-body">
+        <h2 id="modalTitle">Project Title</h2>
+        <!-- Hashtags -->
+        <div class="modal-hashtags" id="modalHashtags">
+          <!-- Dynamically inserted hashtags -->
+        </div>
+        <!-- Short Description (README-style) -->
+        <p id="modalDescription" class="modal-description">
+          This project analyzes football player statistics for the 2024-2025 season, visualizes top performers, and simulates matches between national teams based on player performance metrics.
+        </p>
+        <!-- Additional Info Line -->
+        <p class="modal-additional-info">
+          Detailed features, user flows, and technical challenges are documented on my github.
+        </p>
+        <h3>📊 Overview</h3>
+        <p id="modalOverview" class="modal-overview">
+          <strong>Skills Demonstrated:</strong> Data Analysis, Machine Learning, Visualization, API Integration.
+        </p>
+        <!-- Detailed Section -->
+        <div id="modalDetail" class="modal-detail">
+          <!-- Detailed project text inserted dynamically -->
+        </div>
+        <div class="modal-buttons">
+          <a href="#" class="project-btn github-btn" target="_blank" id="modalGithub">
+            <img src="img/icons/github.svg" alt="GitHub" class="btn-icon"> GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       JavaScript for Modal Interaction
+  ============================================ -->
+  <script>
+    // Select modal elements
+    const modal = document.getElementById('projectModal');
+    const modalClose = document.getElementById('modalClose');
+    const modalBanner = document.getElementById('modalBanner');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalHashtags = document.getElementById('modalHashtags');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalOverview = document.getElementById('modalOverview');
+    const modalDetail = document.getElementById('modalDetail');
+    const modalGithub = document.getElementById('modalGithub');
+
+    // Attach click events to all "Learn More" buttons
+    const learnMoreButtons = document.querySelectorAll('.learn-more-btn');
+    learnMoreButtons.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Get the parent project-box
+        const projectBox = e.target.closest('.project-box');
+        // Retrieve data attributes
+        const projectTitleText = projectBox.getAttribute('data-project') || 'Project Title';
+        const projectDescText = projectBox.getAttribute('data-desc') || '';
+        const projectDetailText = projectBox.getAttribute('data-detail') || '';
+        const projectGithubLink = projectBox.getAttribute('data-github') || '#';
+        const projectBannerLink = projectBox.getAttribute('data-banner') || '';
+        const projectTags = projectBox.getAttribute('data-tags') || '';
+        
+        // Update modal content
+        modalTitle.textContent = projectTitleText;
+        modalDescription.textContent = projectDescText;
+        modalDetail.textContent = projectDetailText;
+        modalGithub.setAttribute('href', projectGithubLink);
+        modalBanner.setAttribute('src', projectBannerLink);
+        
+        // Process hashtags
+        modalHashtags.innerHTML = '';
+        if (projectTags) {
+          const tagsArray = projectTags.split(' ');
+          tagsArray.forEach(tag => {
+            const span = document.createElement('span');
+            span.classList.add('hashtag');
+            span.textContent = tag;
+            modalHashtags.appendChild(span);
+          });
+        }
+        
+        // Open modal
+        modal.classList.add('active');
+      });
+    });
+
+    // Close modal on close button click
+    modalClose.addEventListener('click', function() {
+      modal.classList.remove('active');
+    });
+
+    // Close modal when clicking outside modal content
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

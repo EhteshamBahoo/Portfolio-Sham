@@ -402,37 +402,37 @@ h5 {
 /* Hover Effect */
 .service-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 12px rgba(158, 158, 158, 0.2);
 }
 
-/* Works */
-.projects {
+/* Art */
+.art {
   padding: 7rem 0;
   background-color: var(--primary-bg-color);
 }
 
-.projects-title {
+.art-title {
   text-align: center;
 }
 
-.projects-row {
+.art-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.project-box {
+.art-box {
   position: relative;
   overflow: hidden;
   display: block;
   max-width: 510px;
 }
 
-.project-box a {
+.art-box a {
   display: inline-block;
 }
 
-.project-box,
+.art-box,
 .service-card {
   background-color: var(--gray-color); /* This uses #111111 – a very dark gray */
   color: var(--white-color);
@@ -440,29 +440,29 @@ h5 {
   border: 1px solid var(--gray-color-2);
 }
 
-.project-box:hover .project-mask {
+.art-box:hover .art-mask {
   opacity: 1;
   visibility: visible;
 }
 
-.project-box:hover .project-mask .project-caption {
+.art-box:hover .art-mask .art-caption {
   bottom: 30px;
   opacity: 1;
 }
 
-.project-box:hover .project-img {
+.art-box:hover .art-img {
   transform: scale(1.1);
   transition: all 2s cubic-bezier(0.23, 1, 0.32, 1) 0s;
   width: 100%;
 }
 
-.project-img {
+.art-img {
   transform: scale(1);
   width: 100%;
   transition: all 2s cubic-bezier(0.23, 1, 0.32, 1) 0s;
 }
 
-.project-mask {
+.art-mask {
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
   height: 100%;
   position: absolute;
@@ -475,7 +475,7 @@ h5 {
   overflow: hidden;
 }
 
-.project-mask p {
+.art-mask p {
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1.5px;
@@ -484,7 +484,7 @@ h5 {
   text-align: left;
 }
 
-.project-mask .project-caption {
+.art-mask .art-caption {
   position: absolute;
   bottom: -60px;
   left: 0;
@@ -495,7 +495,7 @@ h5 {
   opacity: 0;
 }
 
-.project-mask p {
+.art-mask p {
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1.5px;
@@ -503,7 +503,6 @@ h5 {
   margin-top: 0;
   text-align: left;
 }
-
 
 
 /* Footer */
@@ -700,7 +699,6 @@ h5 {
       background-color: #f5d1c2; /* Light peach highlight */
       z-index: -1;
     }
-    /* Projects Grid Container */
 
 
 /* Contact */
@@ -1044,307 +1042,274 @@ h5 {
     /* --- Project Grid --- */
  /* Projects Grid Container (Responsive) */
 /* Projects Grid Container (Responsive) */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  width: calc(100vw - 100px); /* 50px gap on each side */
-  margin-left: calc(50% - (100vw - 100px) / 2);
-}
-
-/* When the viewport is 900px or less, reduce the side gap */
-@media (max-width: 900px) {
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-    width: calc(100vw - 60px); /* 30px gap on each side */
-    margin-left: calc(50% - (100vw - 60px) / 2);
-  }
-}
-
-/* When the viewport is 600px or less, further adjust the grid */
-@media (max-width: 600px) {
-  .projects-grid {
-    grid-template-columns: 1fr;
-    width: calc(100vw - 40px); /* 20px gap on each side */
-    margin-left: calc(50% - (100vw - 40px) / 2);
-  }
-}
 
 
+    /* ============================================
+       Projects Section
+    ============================================ */
 
 
-    /* --- Project Cards --- */
-    .project-card {
-      background: white; 
-      border-radius: 10px; 
-      overflow: hidden; 
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s; 
-      cursor: pointer; 
-      position: relative;
+    .projects, .projects * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .project-card:hover { 
-      transform: scale(1.03); 
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+    .projects {
+      font-family: Arial, sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+      line-height: 1.5;
     }
-    .project-image { 
-      width: 100%; 
-      display: block; 
-      transition: transform 0.3s, filter 0.3s; 
+    .projects .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
     }
-    .project-card:hover .project-image { 
-      transform: scale(1.1); 
-      filter: brightness(0.8); 
-    }
-    .project-details { padding: 15px; text-align: center; }
-    .project-title { font-size: 1.2rem; font-weight: bold; margin: 8px 0; }
-    .project-category { font-size: 0.9rem; color: gray; }
-    .project-description { font-size: 0.95rem; margin: 8px 0; }
-    .github-btn {
-      display: inline-flex; 
-      align-items: center; 
-      background: black; 
-      color: white;
-      padding: 6px 12px; 
-      border-radius: 4px; 
-      text-decoration: none; 
-      font-size: 0.9rem;
-      transition: transform 0.2s;
-    }
-    .github-btn:hover { transform: scale(1.05); }
-    .github-btn img { width: 18px; margin-right: 5px; }
-    .project-tags { 
-      margin-top: 10px; 
-      display: flex; 
-      flex-wrap: wrap; 
-      justify-content: center; 
-    }
-    .project-tag { 
-      background: rgb(0, 102, 255); 
-      padding: 4px 8px; 
-      border-radius: 4px; 
-      font-size: 0.75rem; 
-      margin: 3px; 
-    }
-
-    /* --- Modal Styles --- */
-    /* Overlay covers the entire viewport and centers its content */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw; /* full viewport width */
-      height: 100vh; /* full viewport height */
-      background: rgba(0,0,0,0.7);
-      display: none; /* will be changed to flex when active */
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    /* The modal content container */
-    .modal-content {
-      background: white;
-      width: 800px;
-      max-width: 90%;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    .projects {
+      padding: 7rem 0;
+      background-color: #1d1c1c;
       text-align: center;
-      position: relative;
-      max-height: 80vh; /* limits the height to 80% of the viewport */
-      overflow-y: auto; /* enables scrolling if content exceeds the height */
     }
-    
-    .close-btn { 
-      position: absolute; 
-      top: 15px; 
-      right: 20px; 
-      font-size: 2rem; 
-      color: #333; 
-      cursor: pointer; 
+    .projects-title {
+      margin-bottom: 2rem;
     }
-    .modal-header img {
-      width: 100%;
-      height: 250px; /* reduced height */
-      object-fit: cover;
-      border-radius: 8px;
+    .projects-title .title {
+      font-size: 2.5rem;
+      font-weight: bold;
     }
-    
-    .modal-header h1 { 
-      font-size: 2.5rem; 
-      margin-top: 15px; 
-      color: #333; 
-      text-align: left; 
-    }
-    .modal-tags, .modal-skillset { 
-      margin-top: 15px; 
-      display: flex; 
-      flex-wrap: wrap; 
-      gap: 8px; 
-    }
-    .modal-description { 
-      margin: 20px 0; 
-      font-size: 1.1rem; 
-      color: #555; 
-    }
-    .modal-description li {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      list-style-type: disc;
-      margin-left: 20px;
-    }
-    .btn-modal {
-      display: inline-flex; 
-      align-items: center; 
-      background: black; 
-      color: white;
-      padding: 8px 16px; 
-      border-radius: 5px; 
-      text-decoration: none; 
-      font-size: 1rem;
-      transition: transform 0.2s, background 0.2s;
-    }
-    .btn-modal:hover { 
-      background: #333; 
-      transform: scale(1.05); 
-    }
-
-    /* --- New Modal Enhancements (Animations) --- */
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes modalFadeOut {
-      from { opacity: 1; transform: scale(1); }
-      to { opacity: 0; transform: scale(0.8); }
-    }
-    .modal-overlay.active {
-      display: flex;
-      animation: modalFadeIn 0.4s ease forwards;
-    }
-    .modal-overlay.closing {
-      animation: modalFadeOut 0.4s ease forwards;
-    }
-
-    .works-section h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 5px;
-      width: 100%;
-      height: 15px;
-      background-color: #f5d1c2; /* Light peach highlight */
-      z-index: -1;
-    }
-    /* Projects Grid Container */
-    .projects-grid {
+    .projects-row {
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 30px;
-      padding: 0 50px; /* Optional: adds side padding */
-      grid-template-columns: repeat(4, 1fr); /* Default: 4 columns */
+      justify-items: center;
     }
-    
-    @media (max-width: 1200px) {
-      .projects-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    
-    @media (max-width: 900px) {
-      .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    
-    @media (max-width: 600px) {
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    
-    
-    /* Project Card Styling */
-    .project-card {
-      background-color: #fff;
-      border-radius: 5px;
+
+    /* ============================================
+       Project Card
+    ============================================ */
+    .project-box {
+      background-color: #1a1a1a;
+      border: 2px solid #333;
+      border-radius: 12px;
       overflow: hidden;
-      position: relative;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 510px;
     }
-    .project-image-wrapper {
-      position: relative;
+    .project-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.7);
     }
-    .project-image {
+    .project-img {
       display: block;
       width: 100%;
       height: auto;
+      transition: transform 0.3s ease;
     }
-    .project-overlay {
-      position: absolute;
+    .project-box:hover .project-img {
+      transform: scale(1.05);
+    }
+    .project-details-box {
+      background-color: #111;
+      padding: 20px;
+      border-top: 1px solid #333;
+      text-align: left;
+    }
+    .project-tagline {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .project-name {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .project-description {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.3;
+      max-height: 2.6em; /* roughly 2 lines */
+      overflow: hidden;
+    }
+    .project-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      border: 1px solid transparent;
+    }
+    .project-btn .btn-icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .github-btn {
+      background: #24292e;
+      color: #fff;
+    }
+    .github-btn:hover {
+      background: #3a3f47;
+      transform: scale(1.05);
+    }
+    .learn-more-btn {
+      background: #e63946;
+      color: #fff;
+    }
+    .learn-more-btn:hover {
+      background: #d62828;
+      transform: scale(1.05);
+    }
+
+    /* ============================================
+       Responsive Adjustments for Projects Section
+    ============================================ */
+    @media (max-width: 600px) {
+      .projects {
+        padding: 4rem 0;
+      }
+      .projects-title .title {
+        font-size: 2rem;
+      }
+      .project-details-box {
+        padding: 15px;
+      }
+      .project-name {
+        font-size: 1.3rem;
+      }
+      .project-description {
+        font-size: 0.8rem;
+      }
+      .project-btn {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* ============================================
+       Modal Styles
+    ============================================ */
+    .modal {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease;
-    }
-    .project-image-wrapper:hover .project-overlay {
-      opacity: 1;
-      visibility: visible;
-    }
-    .expand-btn {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      background-color: #000;
-      color: #fff;
-      width: 35px;
-      height: 35px;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 3px;
-      text-decoration: none;
-      font-size: 1.2rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      z-index: 1000;
+      padding: 20px; /* so modal doesn't stick to screen edges */
     }
-    .project-details {
-      padding: 20px;
-      text-align: left;
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
     }
-    .project-category {
-      font-size: 0.9rem;
-      color: #7a7a7a;
-      text-transform: uppercase;
-      margin-top: 10px;
+    .modal-content {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 90%;
+      max-width: 800px;
+      height: 80vh; /* Fixed overall modal height */
+      position: relative;
+      animation: modalIn 0.5s ease-out;
+      display: flex;
+      flex-direction: column;
     }
-    .project-title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-top: 5px;
-      color: #000;
+    @keyframes modalIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
-    .project-description {
-      font-size: 1rem;
-      color: #7a7a7a;
-      margin-top: 5px;
-    }
-    /* GitHub Button Styling */
-    .github-btn {
-      display: inline-flex;
-      align-items: center;
-      padding: 5px 8px;
-      font-size: 0.75rem;
-      background-color: #24292e;
+    /* Close Button in a Box */
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #e63946;
       color: #fff;
-      text-decoration: none;
-      border-radius: 3px;
-      margin-top: 10px;
+      border: none;
+      font-size: 1.5rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
-    .github-btn img {
-      width: 16px;
-      height: 16px;
-      margin-right: 4px;
+    .modal-banner {
+      width: 100%;
+      overflow: hidden;
+    }
+    .modal-banner img {
+      width: 100%;
+      display: block;
+      /* Removed max-height so the banner retains its natural size */
+    }
+    .modal-body {
+      padding: 20px;
+      color: #fff;
+      font-size: 1.1rem;
+      flex: 1; /* take up remaining space */
+      overflow-y: auto; /* scroll if content overflows */
+    }
+    .modal-body h2 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    .modal-hashtags {
+      margin-bottom: 10px;
+    }
+    .modal-hashtags .hashtag {
+      display: inline-block;
+      background: #333;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 5px;
+      margin-right: 5px;
+      font-size: 0.9rem;
+    }
+    .modal-description {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .modal-additional-info {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-style: italic;
+      color: #ccc;
+    }
+    .modal-overview {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .modal-detail {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .modal-buttons {
+      text-align: center;
+      margin-bottom: 10px;
     }
