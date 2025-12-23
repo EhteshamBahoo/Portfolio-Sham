@@ -177,6 +177,55 @@
   </section>
   <!--ART-->
 
+  <!-- Poetic Quote Headline Bar -->
+  <section id="quote" class="quote-poetry-bar">
+    <div class="butterfly-container">
+      <div class="butterfly"></div>
+      <div class="butterfly"></div>
+      <div class="butterfly"></div>
+    </div>
+    <div class="marquee-wrapper">
+      <div class="marquee-content" id="marqueeContent">
+        <div class="marquee-item">
+          <span>
+            Mr. Keating: We don't read and write poetry because it's cute. We read and write poetry because we are
+            members of the human race. And the human race is filled with passion. Medicine, law, business these are all
+            noble pursuits necessary to sustain life. But poetry, beauty, romance, and love; these are what we stay
+            alive for.
+          </span>
+          <img src="img/backgrounds/dps-logo.png" alt="DPS Logo" class="marquee-logo">
+        </div>
+        <div class="marquee-item">
+          <span>
+            Mr. Keating: We don't read and write poetry because it's cute. We read and write poetry because we are
+            members of the human race. And the human race is filled with passion. Medicine, law, business these are all
+            noble pursuits necessary to sustain life. But poetry, beauty, romance, and love; these are what we stay
+            alive for.
+          </span>
+          <img src="img/backgrounds/dps-logo.png" alt="DPS Logo" class="marquee-logo">
+        </div>
+        <div class="marquee-item">
+          <span>
+            Mr. Keating: We don't read and write poetry because it's cute. We read and write poetry because we are
+            members of the human race. And the human race is filled with passion. Medicine, law, business these are all
+            noble pursuits necessary to sustain life. But poetry, beauty, romance, and love; these are what we stay
+            alive for.
+          </span>
+          <img src="img/backgrounds/dps-logo.png" alt="DPS Logo" class="marquee-logo">
+        </div>
+        <div class="marquee-item">
+          <span>
+            Mr. Keating: We don't read and write poetry because it's cute. We read and write poetry because we are
+            members of the human race. And the human race is filled with passion. Medicine, law, business these are all
+            noble pursuits necessary to sustain life. But poetry, beauty, romance, and love; these are what we stay
+            alive for.
+          </span>
+          <img src="img/backgrounds/dps-logo.png" alt="DPS Logo" class="marquee-logo">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="art" class="art">
     <div class="container container-lg">
       <div class="art-title">
@@ -270,7 +319,7 @@
       </div>
       <div class="projects-row">
         <!-- Card 1: Footbball visi stat -->
-        <div class="project-box" data-project="Football Players Stats & Best XI Analysis"
+        <div class="project-box" data-project="Football Players Best XI Analysis"
           data-desc="Analyzed 2024-2025 football player stats, visualized top performers, and simulated national team matches."
           data-detail="This project analyzes football player statistics for the 2024-2025 season, visualizes top performers, and simulates matches between national teams based on player performance metrics. The analysis and simulations are carried out through three Jupyter Notebooks: Player-Stats.ipynb, National-Team-Stats.ipynb, and National-Team-Match-Simulation.ipynb. Detailed analysis, custom visualizations, and interactive dashboards bring the data to life."
           data-skills="Data Analysis, Predictive Modeling, Visualization, Matplotlib, Seaborn, Pandas, Numpy"
@@ -281,7 +330,7 @@
           </a>
           <div class="project-details-box">
             <div class="project-tagline">Football & Data Analysis</div>
-            <div class="project-name">Football Players Stats&Best XI</div>
+            <div class="project-name">Football Players Best XI</div>
             <div class="project-description">
               Analyzed 2024-2025 football stats, visualized top performers, and simulated matches.
             </div>
@@ -440,7 +489,13 @@
   ============================================ -->
   <div class="modal" id="projectModal">
     <div class="modal-content">
-      <button class="modal-close" id="modalClose">&times;</button>
+      <button class="modal-close" id="modalClose">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
       <!-- Banner Image as Modal Header -->
       <div class="modal-banner">
         <img src="" alt="Project Banner" id="modalBanner">
@@ -710,6 +765,56 @@
       if (e.target === modal) {
         modal.classList.remove('active');
       }
+    });
+
+    // Headline Marquee Grab-to-Scroll
+    const marqueeWrapper = document.querySelector('.marquee-wrapper');
+    let isDown = false;
+    let startDate;
+    let startX;
+    let scrollLeft;
+
+    marqueeWrapper.addEventListener('mousedown', (e) => {
+      isDown = true;
+      marqueeWrapper.classList.add('active');
+      startX = e.pageX - marqueeWrapper.offsetLeft;
+      scrollLeft = marqueeWrapper.scrollLeft;
+    });
+
+    marqueeWrapper.addEventListener('mouseleave', () => {
+      isDown = false;
+      marqueeWrapper.classList.remove('active');
+    });
+
+    marqueeWrapper.addEventListener('mouseup', () => {
+      isDown = false;
+      marqueeWrapper.classList.remove('active');
+    });
+
+    marqueeWrapper.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - marqueeWrapper.offsetLeft;
+      const walk = (x - startX) * 2; // Scroll-fast
+      marqueeWrapper.scrollLeft = scrollLeft - walk;
+    });
+
+    // Touch support for drag-to-scroll
+    marqueeWrapper.addEventListener('touchstart', (e) => {
+      isDown = true;
+      startX = e.touches[0].pageX - marqueeWrapper.offsetLeft;
+      scrollLeft = marqueeWrapper.scrollLeft;
+    });
+
+    marqueeWrapper.addEventListener('touchend', () => {
+      isDown = false;
+    });
+
+    marqueeWrapper.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - marqueeWrapper.offsetLeft;
+      const walk = (x - startX) * 2;
+      marqueeWrapper.scrollLeft = scrollLeft - walk;
     });
 
   </script>
